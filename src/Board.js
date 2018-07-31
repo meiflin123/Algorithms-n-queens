@@ -165,7 +165,20 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var diagonalSum = 0;
+      var startRow = (minorDiagonalColumnIndexAtFirstRow < this.get('n')) 
+        ? 0 : minorDiagonalColumnIndexAtFirstRow - (this.get('n') - 1);
+      var endRow = (minorDiagonalColumnIndexAtFirstRow < this.get('n')) 
+        ? minorDiagonalColumnIndexAtFirstRow : this.get('n') - 1;
+
+      for (var i = startRow; i <= endRow; i++) {
+        var currentCol = minorDiagonalColumnIndexAtFirstRow - i;
+        diagonalSum += this.rows()[i][currentCol];
+        if (diagonalSum > 1) {
+          return true;
+        }
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
